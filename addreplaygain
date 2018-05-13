@@ -1,0 +1,8 @@
+#!/bin/bash
+
+if [ $# -lt 1 ]; then
+	echo 'Usage: addreplaygain DIRECTORY'
+	exit 1
+fi
+
+find "$1" -type d -print0 | xargs -0 -L1 -P `nproc` sh -c 'cd "$0" && pwd && metaflac --add-replay-gain --preserve-modtime *.flac 2> /dev/null'
